@@ -15,4 +15,7 @@ export const AI_BOTS: Record<string, string> = {
   'SputnikBot':         'Sber / GigaChat',
   'Bytespider':         'ByteDance / Douyin',
   'Baiduspider':        'Baidu / ERNIE',
+  'claude-web':         'Anthropic / Claude Web',
+  'Amazonbot':          'Amazon / Alexa',
+  'Applebot':           'Apple / Siri & Spotlight',
 };

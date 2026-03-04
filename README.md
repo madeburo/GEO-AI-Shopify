@@ -8,7 +8,7 @@
 [![Shopify](https://img.shields.io/badge/Shopify-App-green.svg)](https://shopify.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://nodejs.org/)
 
-An open-source Shopify app that optimizes your store for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, and more.
+An open-source Shopify app that optimizes your store for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, Apple Siri, Amazon Alexa, and more.
 
 **Focus:** **Shopify-native** | **Embedded app** | **Zero-config setup**
 
@@ -26,6 +26,7 @@ Generates `llms.txt` and `llms-full.txt` content served via Shopify App Proxy at
 | GPTBot | OpenAI / ChatGPT |
 | OAI-SearchBot | OpenAI / Copilot Search |
 | ClaudeBot | Anthropic / Claude |
+| claude-web | Anthropic / Claude Web |
 | Google-Extended | Google / Gemini |
 | PerplexityBot | Perplexity AI |
 | DeepSeekBot | DeepSeek |
@@ -36,6 +37,8 @@ Generates `llms.txt` and `llms-full.txt` content served via Shopify App Proxy at
 | SputnikBot | Sber / GigaChat |
 | Bytespider | ByteDance / Douyin |
 | Baiduspider | Baidu / ERNIE |
+| Amazonbot | Amazon / Alexa |
+| Applebot | Apple / Siri & Spotlight |
 
 ### Metafields Integration
 
@@ -241,3 +244,4 @@ Developed by [Made Büro](https://madeburo.com) — UI-first delivery studio.
 - **Author:** Made Büro
 - **Website:** [madeburo.com](https://madeburo.com)
 - **GitHub:** [@madeburo](https://github.com/madeburo)
+- **X:** [@imadeburo](https://x.com/imadeburo)

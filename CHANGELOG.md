@@ -2,6 +2,16 @@
 
 All notable changes to GEO AI Shopify will be documented in this file.
 
+## [0.1.1] - 2026-03-04
+
+### Added — New AI Crawlers
+- claude-web (Anthropic / Claude Web)
+- Amazonbot (Amazon / Alexa)
+- Applebot (Apple / Siri & Spotlight)
+
+### Changed
+- Supported AI crawlers expanded from 13 to 16
+
 ## [0.1.0] - 2026-03-04
 
 ### Added
