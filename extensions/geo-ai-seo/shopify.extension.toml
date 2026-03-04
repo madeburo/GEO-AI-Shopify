@@ -1,0 +1,10 @@
+api_version = "2024-10"
+
+[[extensions]]
+name = "GEO AI SEO Signals"
+handle = "geo-ai-seo"
+type = "theme"
+
+  [[extensions.targeting]]
+  module = "./blocks/seo-signals/seo-signals.liquid"
+  target = "head"

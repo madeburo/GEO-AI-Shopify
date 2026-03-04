@@ -1,0 +1,37 @@
+{%- comment -%}
+  GEO AI Shopify — SEO Signals Block
+  Injects meta tags and JSON-LD for AI search engines.
+  Settings are read from shop-level metafields synced by the app.
+{%- endcomment -%}
+
+{%- if shop.metafields.geo_ai.seo_meta_enabled == true -%}
+  <meta name="llms" content="/apps/llms/standard">
+  <meta name="llms-full" content="/apps/llms/full">
+
+  {%- if localization.available_languages.size > 1 -%}
+    {%- for language in localization.available_languages -%}
+      <link rel="alternate" hreflang="{{ language.iso_code }}" href="/apps/llms/standard/{{ language.iso_code }}">
+      <link rel="alternate" hreflang="{{ language.iso_code }}" href="/apps/llms/full/{{ language.iso_code }}">
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if product and product.metafields.geo_ai.description -%}
+  <meta name="ai-description" content="{{ product.metafields.geo_ai.description | escape }}">
+{%- endif -%}
+
+{%- if product and product.metafields.geo_ai.keywords -%}
+  <meta name="ai-keywords" content="{{ product.metafields.geo_ai.keywords | escape }}">
+{%- endif -%}
+
+{%- if shop.metafields.geo_ai.seo_jsonld_enabled == true -%}
+  {%- render 'jsonld', product: product -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "GEO AI SEO Signals",
+  "target": "head",
+  "settings": []
+}
+{% endschema %}

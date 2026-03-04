@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Shopify CLI
+.shopify/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Cache
+.cache/
+
+# Tests
+**/__tests__/

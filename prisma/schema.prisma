@@ -1,0 +1,115 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Сессии Shopify (создаётся шаблоном Remix автоматически)
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+
+  @@index([shop])
+}
+
+// Настройки приложения для каждого магазина
+model AppSettings {
+  id                    String   @id @default(cuid())
+  shopId                String   @unique
+
+  // Общие
+  siteDescription       String   @default("")
+  includeProducts       Boolean  @default(true)
+  includePages          Boolean  @default(true)
+  includeCollections    Boolean  @default(true)
+  includeBlogPosts      Boolean  @default(false)
+
+  // AI-краулеры (JSON-строка: {"GPTBot":"allow","ClaudeBot":"disallow",...})
+  botRules              String   @default("{}")
+
+  // SEO-сигналы
+  seoMetaEnabled        Boolean  @default(true)
+  seoJsonldEnabled      Boolean  @default(true)
+
+  // Кэширование
+  cacheDurationHours    Int      @default(24)
+
+  // AI-генерация
+  aiProvider            String   @default("none")  // "none" | "claude" | "openai"
+  aiApiKeyEncrypted     String   @default("")
+  aiModel               String   @default("")
+  aiMaxTokens           Int      @default(150)
+  aiPromptTemplate      String   @default("")
+
+  // Трекинг
+  crawlTrackingEnabled  Boolean  @default(true)
+
+  // Debounce регенерации при вебхуках (серверлесс-совместимый)
+  pendingRegeneration   DateTime?
+
+  // Мультиязычность
+  multilingualEnabled   Boolean  @default(false)
+
+  // Онбординг
+  onboardingCompleted   Boolean  @default(false)
+  setupWizardCompleted  Boolean  @default(false)
+  llmsGenerated         Boolean  @default(false)
+  robotsCopied          Boolean  @default(false)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// Кэш сгенерированного контента
+model ContentCache {
+  id          String   @id @default(cuid())
+  shopId      String
+  cacheKey    String   // "llms_standard", "llms_full", "llms_standard_ru", etc.
+  content     String   // Сгенерированный текст
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@unique([shopId, cacheKey])
+  @@index([shopId])
+  @@index([expiresAt])
+}
+
+// Лог визитов AI-ботов
+model CrawlLog {
+  id          String   @id @default(cuid())
+  shopId      String
+  botName     String   // "GPTBot", "ClaudeBot", etc.
+  fileType    String   @default("standard") // "standard" | "full"
+  ipHash      String   // SHA-256 хэш IP
+  userAgent   String
+  accessedAt  DateTime @default(now())
+
+  @@index([shopId, accessedAt])
+  @@index([shopId, botName])
+}
+
+// Прогресс массовой AI-генерации
+model BulkGenerationJob {
+  id          String   @id @default(cuid())
+  shopId      String
+  total       Int
+  processed   Int      @default(0)
+  succeeded   Int      @default(0)
+  failed      Int      @default(0)
+  status      String   @default("running") // "running" | "complete" | "error"
+  resourceIds String   // JSON-массив Shopify GID
+  lastProcessedIndex Int @default(0) // Индекс для возобновления при перезапуске сервера
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([shopId, status])
+}

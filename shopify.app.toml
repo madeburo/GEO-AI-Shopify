@@ -1,0 +1,42 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "REPLACE_WITH_YOUR_CLIENT_ID"
+name = "GEO AI Shopify"
+application_url = "https://localhost"
+
+[access_scopes]
+scopes = "read_products,write_products,read_content,write_content,read_themes,read_metafields,write_metafields,read_translations"
+
+[auth]
+redirect_urls = [ "https://localhost/auth/callback" ]
+
+[webhooks]
+api_version = "2024-10"
+
+  [webhooks.privacy_compliance]
+  customer_data_request_url = "https://localhost/webhooks"
+  customer_deletion_url = "https://localhost/webhooks"
+  shop_deletion_url = "https://localhost/webhooks"
+
+[[webhooks.subscriptions]]
+topics = [
+  "products/create",
+  "products/update",
+  "products/delete",
+  "pages/create",
+  "pages/update",
+  "pages/delete",
+  "collections/create",
+  "collections/update",
+  "collections/delete",
+  "app/uninstalled"
+]
+uri = "/webhooks"
+
+[app_proxy]
+url = "https://localhost/proxy"
+subpath = "llms"
+prefix = "apps"
+
+[pos]
+embedded = false

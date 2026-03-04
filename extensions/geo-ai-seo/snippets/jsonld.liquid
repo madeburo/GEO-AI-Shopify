@@ -1,0 +1,46 @@
+{%- comment -%}
+  GEO AI Shopify — JSON-LD Structured Data
+  Renders Schema.org WebSite on homepage, Product on product pages.
+{%- endcomment -%}
+
+{%- if template.name == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- if product -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ product.url | prepend: shop.url | json }},
+  {%- if product.metafields.geo_ai.description -%}
+  "description": {{ product.metafields.geo_ai.description | json }},
+  {%- elsif product.description != blank -%}
+  "description": {{ product.description | strip_html | truncate: 200 | json }},
+  {%- endif -%}
+  {%- if product.metafields.geo_ai.keywords -%}
+  "keywords": {{ product.metafields.geo_ai.keywords | json }},
+  {%- endif -%}
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": {{ shop.currency | json }},
+    "lowPrice": {{ product.price_min | money_without_currency | json }},
+    "highPrice": {{ product.price_max | money_without_currency | json }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+  }
+}
+</script>
+{%- endif -%}
