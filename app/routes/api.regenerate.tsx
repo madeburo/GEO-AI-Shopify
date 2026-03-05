@@ -20,6 +20,10 @@ import { REGENERATE_COOLDOWN_SECONDS } from "../utils/constants";
 /**
  * In-memory map tracking last regeneration time per shop.
  * Key: shopId, Value: timestamp (ms) of last successful regeneration.
+ *
+ * NOTE: In-memory rate limiter — state is per-process. При горизонтальном
+ * масштабировании (multiple instances) лимиты не разделяются между процессами.
+ * Для production с несколькими инстансами рекомендуется Redis/DB-based rate limiting.
  */
 const lastRegenerationMap = new Map<string, number>();
 

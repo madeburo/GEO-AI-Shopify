@@ -118,6 +118,7 @@ Create a `.env` file with:
 SHOPIFY_API_KEY=your_api_key
 SHOPIFY_API_SECRET=your_api_secret
 ENCRYPTION_KEY=64_character_hex_string
+DATABASE_URL=file:dev.db
 SCOPES=read_products,write_products,read_content,write_content,read_themes,read_metafields,write_metafields,read_translations
 SHOPIFY_APP_URL=https://your-app-url
 ```
@@ -187,6 +188,21 @@ POST /api/settings
 POST /api/ai-generate
 POST /api/ai-bulk
 ```
+
+---
+
+## Security
+
+- HMAC-SHA256 signature verification on App Proxy routes using `crypto.timingSafeEqual()` (constant-time comparison)
+- Mandatory `SHOPIFY_API_SECRET` — app refuses to verify signatures with an empty secret
+- Shop parameter validation on public API endpoints (must match `*.myshopify.com` pattern)
+- Rate limiting on public API endpoints (60 req/min per shop) with `Retry-After` header
+- JSON input validation with proper error responses (HTTP 400) instead of unhandled exceptions
+- CORS headers (`Access-Control-Allow-Origin: *`) on public API endpoints for cross-origin access
+- AES-256-GCM encrypted API key storage
+- GDPR-compliant IP anonymization (SHA-256 hashing) in crawl logs
+- Database URL read from `DATABASE_URL` environment variable (not hardcoded)
+- In-memory rate limiting documented with scaling recommendations for multi-instance deployments
 
 ---
 

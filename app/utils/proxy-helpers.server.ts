@@ -6,7 +6,7 @@
  * handles deferred regeneration, and logs bot visits.
  */
 
-import { createHmac } from "crypto";
+import { createHmac, timingSafeEqual } from "crypto";
 
 import prisma from "../db.server";
 import { unauthenticated } from "../shopify.server";
@@ -40,11 +40,39 @@ export function verifyProxySignature(url: URL): boolean {
   );
   const message = sorted.map(([k, v]) => `${k}=${v}`).join("");
 
-  const secret = process.env.SHOPIFY_API_SECRET || "";
+  const secret = getShopifySecret();
   const hmac = createHmac("sha256", secret).update(message).digest("hex");
 
-  return hmac === signature;
+  try {
+    return timingSafeEqual(
+      Buffer.from(hmac, "hex"),
+      Buffer.from(signature, "hex"),
+    );
+  } catch {
+    // Buffers differ in length (invalid signature format) → reject
+    return false;
+  }
 }
+
+/** Cached secret value — populated on first successful read */
+let _cachedSecret: string | null = null;
+
+/**
+ * Read SHOPIFY_API_SECRET from environment, caching after first success.
+ * Throws if the variable is missing or empty.
+ */
+function getShopifySecret(): string {
+  if (_cachedSecret) return _cachedSecret;
+
+  const secret = process.env.SHOPIFY_API_SECRET;
+  if (!secret) {
+    throw new Error("SHOPIFY_API_SECRET environment variable is required");
+  }
+
+  _cachedSecret = secret;
+  return _cachedSecret;
+}
+
 
 // ── Shared proxy handler ─────────────────────────────────────────────────
 
