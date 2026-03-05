@@ -2,6 +2,26 @@
 
 All notable changes to GEO AI Shopify will be documented in this file.
 
+## [0.2.0] - 2026-03-05
+
+### Security
+- HMAC signature comparison replaced with `crypto.timingSafeEqual()` to prevent timing attacks (`proxy-helpers.server.ts`)
+- Empty `SHOPIFY_API_SECRET` now throws an error instead of silently using an empty HMAC key
+- Shop parameter validated against `*.myshopify.com` pattern on public API endpoints — returns HTTP 400 for invalid format
+- `JSON.parse()` in settings action wrapped in try/catch — returns HTTP 400 instead of unhandled 500
+- Rate limiting added to public API endpoints (`/api/llms`, `/api/llms/full`): 60 req/min per shop, HTTP 429 with `Retry-After`
+- CORS headers (`Access-Control-Allow-Origin: *`) added to public API responses with OPTIONS preflight support
+- In-memory rate limiting limitations documented with Redis/DB-based recommendations for horizontal scaling
+
+### Changed
+- `DATABASE_URL` now read from environment variable via `env("DATABASE_URL")` in `prisma/schema.prisma` (was hardcoded `file:dev.db`)
+- Docker base image updated from `node:18-alpine` to `node:20-alpine` (Node 18 EOL)
+- Webhook API version in `shopify.app.toml` synced to `2025-01` (was `2024-10`, now matches `shopify.server.ts`)
+
+### Added
+- `DATABASE_URL=file:dev.db` in `.env` for development environment
+- Security hardening test suite: exploration tests (6) and preservation tests (9) using Vitest + fast-check
+
 ## [0.1.1] - 2026-03-04
 
 ### Added — New AI Crawlers

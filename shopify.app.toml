@@ -11,7 +11,7 @@ scopes = "read_products,write_products,read_content,write_content,read_themes,re
 redirect_urls = [ "https://localhost/auth/callback" ]
 
 [webhooks]
-api_version = "2024-10"
+api_version = "2025-01"
 
   [webhooks.privacy_compliance]
   customer_data_request_url = "https://localhost/webhooks"

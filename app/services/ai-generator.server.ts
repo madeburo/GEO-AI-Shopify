@@ -66,13 +66,15 @@ export class AiProviderError extends Error {
 
 // ── Rate limiter (in-memory, per-process) ────────────────────────────────
 
-interface RateLimiterState {
-  count: number;
-  windowStart: number;
-}
-
 const RATE_WINDOW_MS = 60_000; // 1 minute
 
+/**
+ * Simple sliding-window rate limiter for AI API calls.
+ *
+ * NOTE: In-memory rate limiter — state is per-process. При горизонтальном
+ * масштабировании (multiple instances) лимиты не разделяются между процессами.
+ * Для production с несколькими инстансами рекомендуется Redis/DB-based rate limiting.
+ */
 export class RateLimiter {
   private state: RateLimiterState;
   private limit: number;

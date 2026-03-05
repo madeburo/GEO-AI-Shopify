@@ -104,7 +104,13 @@ export async function action({ request }: ActionFunctionArgs) {
   const shopId = session.shop;
 
   const formData = await request.formData();
-  const data = JSON.parse(formData.get("settings") as string);
+
+  let data: Record<string, unknown>;
+  try {
+    data = JSON.parse(formData.get("settings") as string);
+  } catch {
+    return json({ error: "Invalid settings format" }, { status: 400 });
+  }
 
   // Validate cache duration
   if (!SUPPORTED_CACHE_DURATIONS.includes(data.cacheDurationHours)) {
