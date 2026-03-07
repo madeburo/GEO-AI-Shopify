@@ -2,7 +2,9 @@
 
 ![GEO AI Shopify](Geo-AI-Shopify.png)
 
-**Generative Engine Optimization for Shopify**
+AI Search Optimization for Shopify.
+
+Generate llms.txt, AI crawler rules and metadata to make your store visible to AI search engines.
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
 [![Shopify](https://img.shields.io/badge/Shopify-App-green.svg)](https://shopify.dev/)
@@ -11,6 +13,8 @@
 An open-source Shopify app that optimizes your store for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, Apple Siri, Amazon Alexa, and more.
 
 **Focus:** **Shopify-native** | **Embedded app** | **Zero-config setup**
+
+Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
 ---
 
@@ -234,6 +238,23 @@ geo-ai-shopify/
 - Node.js 20 or higher
 - Shopify Partner account
 - Shopify CLI
+
+---
+
+## GEO AI Ecosystem
+
+GEO AI – AI Search Optimization. A multi-platform framework.
+
+Website: https://www.geoai.run
+
+Works with:
+- WordPress
+- WooCommerce
+- Shopify
+- Next.js
+- Node.js
+
+Core engine: https://github.com/madeburo/GEO-AI
 
 ---
 
