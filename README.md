@@ -279,6 +279,6 @@ GEO AI Shopify is open-source software licensed under the [GPL v2](LICENSE).
 Developed by [Made Büro](https://madeburo.com) — UI-first delivery studio.
 
 - **Author:** Made Büro
-- **Website:** [madeburo.com](https://madeburo.com)
+- **Website:** [geoai.run](https://www.geoai.run)
 - **GitHub:** [@madeburo](https://github.com/madeburo)
 - **X:** [@imadeburo](https://x.com/imadeburo)

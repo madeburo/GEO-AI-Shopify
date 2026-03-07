@@ -2,6 +2,13 @@
 
 All notable changes to GEO AI Shopify will be documented in this file.
 
+## [0.2.1] - 2026-03-07
+
+### Docs
+- Updated documentation with new domain geoai.run
+- Added GEO roadmap
+- Added ecosystem overview
+
 ## [0.2.0] - 2026-03-05
 
 ### Security
